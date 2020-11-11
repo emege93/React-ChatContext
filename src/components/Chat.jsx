@@ -1,4 +1,4 @@
-import React, { useContext } from 'react'
+import React, { useContext, useEffect, useRef } from 'react'
 import { ChatContext } from '../context/ChatProvider'
 import Agregar from './Agregar'
 
@@ -6,9 +6,18 @@ import Agregar from './Agregar'
 const Chat = () => {
 
     const {mensajes, usuario} = useContext(ChatContext)
+    const refZonaChat = useRef(null)
+
+    useEffect(() => {
+        refZonaChat.current.scrollTop = refZonaChat.current.scrollHeight
+    }, [mensajes])
 
     return (
-        <div className="mt-3 px-2">
+        <div
+            className="mt-3 px-2"
+            style={{height: '75vh', overflow: 'scroll'}}
+            ref={refZonaChat}
+        >
 
             {
                 mensajes.map((item, index) => (
